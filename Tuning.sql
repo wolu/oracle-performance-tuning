@@ -1,6 +1,9 @@
+-- 
 -- Oracle Performance Tuning
 -- Venkata Bhattaram
--- Tinitiate.com (c) 2013
+-- Tinitiate.com
+-- (c) on all CODE EXAMPLES
+--
 
 1) INTRODUCTION
    * Performance tuning or optimization is required to speedup the execution of DB operations.
@@ -66,9 +69,45 @@
             * Read data blocks based on the levels in the b-tree
               and index clustering factor.
 
+   * Bind Variable peeking 
    * Plan Generation
+      - Checks Join Order, Query Transformation
+
+
+==================================
+==  OPERATIONS OF THE OPTIMIZER ==
+==================================
+
+Access paths are ways in which data is retrived from the Database.
+
+1) FULL TABLE SCAN
+   * All Blocks under the HighWaterMark are scanned.
+   * Blocks are read sequentially.
+   * Initialization parameter: DB_FILE_MULTIBLOCK_READ_COUNT, 
+     will be used to read multiblocks for a better full table scan.
+   * Full Table Scan Is Faster for Accessing Large Amounts of Data, 
+     Making multiple index range scans (Smaller I/O) when accessing a
+     large fraction  of the blocks in a table is more expensive.
+     Full table scans can use larger I/O calls, and making  fewer large I/O 
+     calls is cheaper than making many smaller calls.
+   * Full Table Scans are made in the following cases:
+      - Very Large data set (More block to scan)
+      - Very Smll table
+      - High Parallelism degree
+      - Full Table Scan hint
+
+2) RowId Scans
+   * RowId is the unique identifier in a Database for a Row.
+   * It spefcifies the datafile, data block of the row.
+   * Optimized does a RowId scan when a index scan happens
+   
       
-         
+===================================
+==  DB Initialization Parameters ==
+===================================
+
+
+
 3) SQL tuning where to start ?
    * In order to fix something we need to understand what the problem is,
      Oracle provides with the various tools and options to dig through the SQL execution plan.
