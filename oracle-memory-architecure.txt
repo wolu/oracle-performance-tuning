@@ -42,3 +42,32 @@ MEMORY STRUCTURE
       * Persistent area, This area contains bind variable values
       * Runtime area,    Query execution state information
       * SQL work areas, For joins, group by sort operations
+
+
+   --------------   
+   ORACLE STORAGE
+   --------------
+   
+      Oracle Data Blocks   
+         * Rows are stored in datablocks 
+           (Block Size can be set using DB_BLOCK_SIZE Initialization parameter).
+         * Each block has Header info, Row Data (PCTUSED) and Free Space(PCTFREE)
+         * PCTUSED: Percentage of the block that can be used for the row insert.
+         * PCTFREE: Percentage of the block that can be used for the row update.
+         * Row Chaining, row spanning across multiple blocks.
+      
+      Oracle Extents
+         * Logical unit of database storage space allocation made up of a number of contiguous data blocks.
+         * To dealloate space use the statement: ALTER TABLE table_name DEALLOCATE UNUSED;
+         * INITIAL, NEXT, PCTINCREASE and MINEXTENTS, Size parameters for Extents
+
+      Oracle Segments
+         * Set of extents for a specific logical storage structure (Table, Materialized View) in a tablespace.
+
+      Temp Segment
+         * Temporary workspace for intermediate stages of SQL statement parsing and execution.
+         * CREATE INDEX, GROUP BY, ORDER BY, Select Distinct, UNION, INTERSECT, MINUS.
+         * As a SQL statement is also a logical storage structure (temporarily untill its executed).
+         
+      Undo Segment
+         * ROLLBACK data is saved here untill a commit is issued.
