@@ -1,0 +1,44 @@
+ORACLE Architecture
+-------------------
+
+MEMORY STRUCTURE
+
+   Software Code Areas:
+      * Memory area from where Stored code executes
+
+   ------------------------
+   System global area (SGA)
+   ------------------------
+      * Holds the shared memory structures, for server and background processes.
+      * Holds the Oracle Database instance. 
+      * Holds cached data blocks and shared SQL areas.
+
+      Database Buffer Cache
+         * Holds copies of data blocks read from datafiles
+         * LRU(Least recently used) Lists, MRU(Most recently used),
+           Pinned Buffers (Currently in use buffer locations), Free Buffers
+
+      Redo Log Buffer
+         * All DML /DDL entries are copied from the user's memory space to the redo
+           log buffer in the SGA. Which is continuous and sequential buffer sequence.
+           A background process LGWR(LogWriter) writes the redo log buffer to the 
+           active redo log file (on disk).
+
+      Shared Pool
+         * Library Cache, Dictionary Cache, Result Cache
+         * Shared area for all SQL PL/SQL executions and result cache
+           (to use common execution data elements)
+
+      Large Pool (Session Memory  and I/O Process)
+      Java Pool  (For Oracle Java Stored Procs execution and handling)
+      Streams Pool (For Replication with Oracle Streams)
+
+   -------------------------
+   Program Global Area (PGA)
+   -------------------------
+      * Memory to process SQL statement
+      * Memory to hold logon other session information.
+      * Cursors and SQL Areas
+      * Persistent area, This area contains bind variable values
+      * Runtime area,    Query execution state information
+      * SQL work areas, For joins, group by sort operations
